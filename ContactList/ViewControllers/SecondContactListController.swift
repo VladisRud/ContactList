@@ -7,23 +7,53 @@
 
 import UIKit
 
-class SecondContactListController: UIViewController {
-
+class SecondContactListController: UITableViewController {
+    
+    //MARK: - Properties
+    var personList: [Person] = []
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemBackground
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: - UITableViewDataSource
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        personList.count
     }
-    */
-
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        2
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        "\(personList[section].firstName) \(personList[section].secondName)"
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var config = cell.defaultContentConfiguration()
+        
+        switch indexPath.row {
+        case 0:
+            config.image = UIImage(systemName: "phone.fill")
+            config.text = "\(personList[indexPath.section].telephoneNumber)"
+        default:
+            config.image = UIImage(systemName: "tray.fill")
+            config.text = "\(personList[indexPath.section].email)"
+        }
+        cell.contentConfiguration = config
+        
+        return cell
+    }
+    
+    //MARK: - UITableViewDelegate
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        false
+    }
+    
+    
+    
 }

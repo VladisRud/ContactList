@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = window
         
-        window.rootViewController = StartContactListController()
+        window.rootViewController = UINavigationController(rootViewController: ContactListTabBarController())
         
         window.makeKeyAndVisible()
         
